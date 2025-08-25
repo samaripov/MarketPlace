@@ -1,7 +1,10 @@
 class UsersController < ApplicationController
-  before_action find_user_by_id, only: %i[ edit update ]
+  before_action :find_user_by_id, only: %i[ show edit update ]
   def index
     @users = User.all
+  end
+
+  def show
   end
 
   def new

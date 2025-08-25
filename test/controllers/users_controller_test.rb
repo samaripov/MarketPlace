@@ -38,6 +38,14 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     end
     assert_response :unprocessable_entity
   end
+
+  test "should show user" do
+    get user_path(@user)
+    assert_response :success
+    assert_select "h1", @user.username
+    assert_select "p", @user.email
+  end
+
   test "should update user with valid attributes" do
     patch user_path(@user), params: {
       user: {
