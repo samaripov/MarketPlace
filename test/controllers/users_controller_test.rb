@@ -38,4 +38,32 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     end
     assert_response :unprocessable_entity
   end
+  test "should update user with valid attributes" do
+    patch user_path(@user), params: {
+      user: {
+        username: "updateduser",
+        email: "updated@example.com",
+        password: "newpassword123",
+        password_confirmation: "newpassword123"
+      }
+    }
+    assert_redirected_to user_path(@user)
+    @user.reload
+    assert_equal "updateduser", @user.username
+    assert_equal "updated@example.com", @user.email
+  end
+
+  test "should not update user with invalid attributes" do
+    patch user_path(@user), params: {
+      user: {
+        username: "",
+        email: "invalid",
+        password: "",
+        password_confirmation: ""
+      }
+    }
+    assert_response :unprocessable_entity
+    @user.reload
+    refute_equal "", @user.username
+  end
 end
