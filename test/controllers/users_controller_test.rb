@@ -45,6 +45,19 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test "edit user form displays all required fields, submit button, and header" do
+    get edit_user_path(@user)
+    assert_response :success
+    assert_select "h1", "Editing #{@user.username}"
+    assert_select "form" do
+      assert_select "input[name=?]", "user[username]"
+      assert_select "input[name=?]", "user[email]"
+      assert_select "input[name=?]", "user[password]"
+      assert_select "input[name=?]", "user[password_confirmation]"
+      assert_select "input[type=submit]"
+    end
+  end
+
   test "should show user" do
     get user_path(@user)
     assert_response :success
