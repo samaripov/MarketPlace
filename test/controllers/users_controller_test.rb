@@ -5,12 +5,6 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     @user = users(:one)
   end
 
-  test "should get index" do
-    get users_path
-    assert_response :success
-    assert_select "h1", "Login"
-  end
-
   test "should create user with valid attributes" do
     assert_difference("User.count") do
       post users_path, params: {
@@ -37,6 +31,18 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
       }
     end
     assert_response :unprocessable_entity
+  end
+
+  test "new user form displays all required fields and submit button" do
+    get new_user_path
+    assert_response :success
+    assert_select "form" do
+      assert_select "input[name=?]", "user[username]"
+      assert_select "input[name=?]", "user[email]"
+      assert_select "input[name=?]", "user[password]"
+      assert_select "input[name=?]", "user[password_confirmation]"
+      assert_select "input[type=submit][value=?]", "Create Account"
+    end
   end
 
   test "should show user" do
