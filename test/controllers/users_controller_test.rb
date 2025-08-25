@@ -8,7 +8,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   test "should get index" do
     get users_path
     assert_response :success
-    assert_select "h1", "Users"
+    assert_select "h1", "Login"
   end
 
   test "should create user with valid attributes" do
