@@ -74,4 +74,11 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     @user.reload
     refute_equal "", @user.username
   end
+
+  test "should delete user" do
+    assert_difference("User.count", -1) do
+      delete user_path(@user)
+    end
+    assert_redirected_to root_path
+  end
 end
